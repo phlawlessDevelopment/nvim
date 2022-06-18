@@ -92,9 +92,9 @@ additional_plugins = {
   -- Syntax is like normal packer.nvim Syntax.
   -- If you need to set some settings for your plugins
   -- you must put configs in config = function() like below examples
-
   -- { "famiu/feline.nvim", branch = "develop" },
-
+  
+    "phlawlessDevelopment/vim-choosewin",
   -- "mhartington/formatter.nvim",
 
   -- { "crispgm/nvim-go", ft = "go" },
@@ -186,7 +186,12 @@ local config = {
     },
   },
   other_configs = function()
-    vim.cmd("colorscheme enfocado")
+    vim.diagnostic.config({virtual_text = false,signs = false,})
+    vim.o.updatetime = 250
+    vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
+    vim.g.choosewin_overlay_enable = 1
+    vim.cmd("colorscheme nightfly")
+    vim.cmd('source /home/phalyce/.config/nvim/custom-vim.vim')
     -- Other settings here
     -- For examples for disabling line number:
     -- vim.opt.number = false
@@ -195,6 +200,7 @@ local config = {
     -- Or for changing terminal toggle mapping:
     -- first argument is mode of mapping. second argument is keymap.
     -- third argument is command. and last argument is optional argument like {expr = true}.
+      map("n", "<leader>-", ":ChooseWin<CR>")
     -- map("n", "<C-t>", ":ToggleTerm<CR>")
     -- map("t", "<C-t>", ":ToggleTerm<CR>")
 
@@ -227,5 +233,4 @@ local config = {
     -- user_indent_blankline_style = ""
   end,
 }
-
 return config
